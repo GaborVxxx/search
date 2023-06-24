@@ -1,0 +1,43 @@
+.tab-layout {
+  width: 100%;
+  height: 50vh;
+}
+
+.tab-mobile {
+  width: 100%;
+  height: 100%;
+}
+
+.position-search-bar {
+  top: 0;
+  right: 0;
+}
+
+.psb-mobile {
+  top: -3rem;
+  right: 0;
+}
+
+.ui.bottom.attached.segment.active.tab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+
+}
+
+.ui.card {
+  margin: 0 !important;
+}
+
+.single-item-drink {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

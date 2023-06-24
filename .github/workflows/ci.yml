@@ -1,0 +1,91 @@
+# NOTE: windows-latest look like not reading .prettierrc file so I put the set up to package.json
+# Plus: added .gitattributes file but I`m not even sure that works in order to make CI read properly
+
+name: CI-general
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build, test on Node ${{ matrix.node }} and ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['18.x']
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+      # This step pull the repo
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      # This step will try cache the dependency
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      # Set up Node and run install, prettier check, and test with coverage
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npm run format:C
+      - run: npm test -- --coverage
+        env:
+          CI: true
+
+      # Upload a code test coverage to a folder in project
+      - name: Upload Test Coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage
+          path: coverage
+
+      # Check the event type with an IF condition, if we push we run this job! Try to build the project.
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: npm run build
+# MORE OPTIONAL STEPS:
+
+# Upload a code test coverage to a folder in project
+#- name: Upload Test Coverage
+#  uses: actions/upload-artifact@v1
+#  with:
+#    name: code-coverage
+#    path: coverage
+
+# Upload the build files to build folder in project
+#- name: Upload Build Folder
+#  if: github.event_name == 'push'
+#  uses: actions/upload-artifact@v1
+#  with:
+#    name: build
+#    path: build
+#- name: ZIP Assets
+#  if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#  run: |
+#    zip -r build.zip ./build
+#    zip -r coverage.zip ./coverage
+
+# Create a release +
+#- name: Create a Release
+#  if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#  run: npx semantic-release
+#  env:
+#    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+# Upload coverage report to codecov BUT it needs setting up on codecov!
+#- name: Upload Coverage Reports
+#  if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#  run: npx codecov
+#  env:
+#    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

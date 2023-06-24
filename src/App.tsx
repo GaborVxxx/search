@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import {NavText} from "./components/nav-text/nav-text";
+import {MainDisplay} from "./components/main-display/main-display";
+import {Charts} from "./components/charts/alcohol-chart";
+import useWindowSize from "./hooks/windowSizeHook/window-sixe";
+
+// Util function for alert error
+export const AlertError = (message:string) => {
+    return alert(message)
+}
 
 function App() {
+
+    let {width} = useWindowSize()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={width && width >= 1750 ? '---main-layout' : '---main-layout ---main-mobile'}>
+        <NavText />
+        <MainDisplay />
+        <Charts />
     </div>
   );
 }

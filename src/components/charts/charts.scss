@@ -1,0 +1,11 @@
+.charts-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.charts-mobile {
+  flex-direction: column;
+  gap: 1rem;
+}

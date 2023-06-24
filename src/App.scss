@@ -1,0 +1,70 @@
+$font-basic: Lato, sans-serif;
+
+
+/* reset 1 */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* reset 2 in order to 1 rem render to 10px */
+html {
+  /* 10px / 16px = 0.625 = 62.5% */
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* store variables in one place */
+:root {
+  --font-basic: $font-basic
+}
+
+/* reset all focus state */
+*:focus {
+  outline: none;
+}
+
+/* GENERAL CHANGE */
+
+.App {
+  font-family: $font-basic, sans-serif;
+  line-height: 1;
+  font-weight: 400;
+  overflow-x: hidden;
+  color: var(--text-color-grays2);
+}
+
+/* UTIL CLASSES*/
+.---section-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.---relative {
+  position: relative;
+}
+
+.---absolute {
+  position: absolute;
+}
+
+.---main-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4.2rem;
+  padding: 5.7rem 7.1rem 5.7rem 7.1rem;
+  height: auto;
+}
+
+.---main-mobile {
+  padding: 5.7rem 2rem 5.7rem 2rem;
+}
+
