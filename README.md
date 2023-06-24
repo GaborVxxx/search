@@ -82,21 +82,21 @@ If there is only one option left in the search bar data the app will go to its l
 # Dev quick nav in files
 
 ## Redux
-search/src/app  <-- the store
+../src/app  <-- the store
 
 search/src/features  <-- the reducers and actions
 
 ## Costume Hooks
-search/src/hooks
+../src/hooks
 
 ## Major "TS" interfaces for the app
 search/src/interfaces
 
 ## Components
-search/src/components
+../src/components
 
 ## Semantic UI styling tool
-search/src/semantic-ui
+../src/semantic-ui
 
 
 # Styling note
