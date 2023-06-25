@@ -246,6 +246,7 @@ export const MainDisplay: React.FC = () => {
         {width && width >= 1750 ? (
           <>
             <Tab
+              data-testid="item-display"
               panes={panes}
               className={'tab-layout'}
               onTabChange={handleTubChange}
@@ -254,6 +255,7 @@ export const MainDisplay: React.FC = () => {
         ) : (
           <>
             <Tab
+              data-testid="item-display"
               menu={{ fluid: true, vertical: true, tabular: true }}
               panes={panes}
               className={'tab-layout tab-mobile'}
@@ -297,6 +299,7 @@ export const MainDisplay: React.FC = () => {
         {width && width >= 1750 ? (
           <>
             <Tab
+              data-testid="item-display"
               panes={filter_panes}
               className={'tab-layout'}
               onTabChange={handleTubChangeFilter}
@@ -305,6 +308,7 @@ export const MainDisplay: React.FC = () => {
         ) : (
           <>
             <Tab
+              data-testid="item-display"
               menu={{ fluid: true, vertical: true, tabular: true }}
               panes={filter_panes}
               className={'tab-layout tab-mobile'}

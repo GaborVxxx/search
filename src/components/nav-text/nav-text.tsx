@@ -9,7 +9,7 @@ export const NavText: React.FC = () => {
       */
   return (
     <section className={'---section-wrapper'}>
-      <p className={'main-p'}>
+      <p className={'main-p'} data-testid="page-dir">
         Home / <span>Cocktail List</span>
       </p>
     </section>
