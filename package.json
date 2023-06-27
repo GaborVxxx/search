@@ -37,8 +37,8 @@
     "format:C": "prettier --check .",
     "format:F": "prettier --write .",
     "tsc:check-cypress": "tsc --noEmit --project \"./cypress/tsconfig.json\"",
-    "test:e2e": "cypress run --headed --config-file \"./cypress/config/cypress-base.json\"",
-    "test:e2e-open": "cypress open --config-file \"./cypress/config/cypress-base.json\""
+    "test:e2e": "cypress run",
+    "test:e2e-open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
