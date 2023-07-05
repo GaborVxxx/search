@@ -20,6 +20,12 @@ describe('test the home page of search app', () => {
       .and('have.class', 'header')
       .contains('A1')
     cy.get('[data-testid="item-display"]').first().contains('A1')
+    cy.get('.bottom').should('exist').find('.ui.card').should('have.length', 25)
+    cy.get('.bottom')
+      .find('.ui.card')
+      .eq(0)
+      .find('.header')
+      .should('have.text', 'A1')
   })
   it('click on an other letter will render new list of cocktail starting with that letter', () => {
     cy.get('.item').should('exist').contains('B').click()

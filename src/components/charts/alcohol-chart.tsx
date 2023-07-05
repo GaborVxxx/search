@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import './charts.scss'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
@@ -21,24 +21,22 @@ export const Charts = () => {
 
   const [alcohol_, setAlcohol_] = useState<ChartIF | null>(null)
   const [glass_, setGlass_] = useState<ChartIF | null>(null)
-  const [glass_color, setGlass_color] = useState<string[]>([])
 
   //generate random colors for glass type
   const generatorBG = (list: string[]) => {
-    const min = 0
     const max = 255
-    const randomBetween = (min: number, max: number) =>
-      min + Math.floor(Math.random() * (max - min + 1))
-    let bg_list = list.map((item) =>
+    const randomBetween = (max: number) => {
+      return Math.floor(Math.random() * max)
+    }
+
+    return list.map((item) =>
       item.replace(
         item,
-        `rgba(${randomBetween(min, max)}, ${randomBetween(
-          min,
+        `rgba(${randomBetween(max)}, ${randomBetween(max)}, ${randomBetween(
           max
-        )}, ${randomBetween(min, max)}, 0.2)`
+        )}, 0.2)`
       )
     )
-    setGlass_color(bg_list)
   }
 
   const generateBorder = (list: string[]) => {
@@ -46,7 +44,7 @@ export const Charts = () => {
   }
 
   //filter data based on glass type
-  const GlassFilter = (list: Drink[]) => {
+  const GlassFilter = useCallback((list: Drink[]) => {
     // ES5 <--- solution
     let glasses = list
       .map((item) => item.strGlass)
@@ -60,7 +58,7 @@ export const Charts = () => {
       data.push(filter.length)
     }
     if (glasses && data) {
-      generatorBG(glasses as string[])
+      let bg = generatorBG(glasses as string[])
 
       let data_: ChartIF = {
         labels: glasses as string[],
@@ -68,15 +66,15 @@ export const Charts = () => {
           {
             label: 'Glasses',
             data: data,
-            backgroundColor: glass_color,
-            borderColor: generateBorder(glass_color),
+            backgroundColor: bg,
+            borderColor: generateBorder(bg),
             borderWidth: 1,
           },
         ],
       }
       setGlass_(data_)
     }
-  }
+  }, [])
 
   //filter data based on alcohol content
   const AlcoholFilter = (list: Drink[]) => {
@@ -109,6 +107,7 @@ export const Charts = () => {
       GlassFilter(letterDataState)
     } else {
       AlcoholFilter(letterDataState)
+      // placeholder state data for glasses state if letterDataState.length === 0
       let data_: ChartIF = {
         labels: ['No glass'],
         datasets: [
@@ -123,8 +122,7 @@ export const Charts = () => {
       }
       setGlass_(data_)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [letterDataState])
+  }, [letterDataState, GlassFilter])
 
   return (
     <section

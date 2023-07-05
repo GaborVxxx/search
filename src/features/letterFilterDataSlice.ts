@@ -14,11 +14,7 @@ export const letter_data_Slice = createSlice({
   initialState,
   reducers: {
     setLetterDataList: (state, action: PayloadAction<Drink[]>) => {
-      if (state.searchData.length === 0) {
-        state.searchData = action.payload
-      } else {
-        state.searchData = action.payload
-      }
+      state.searchData = action.payload
     },
   },
 })
